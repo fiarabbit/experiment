@@ -1,0 +1,16 @@
+{
+  "name": "experiment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify src/View/login/login.js -o web/bundle.js"
+  },
+  "author": "Yuki Hashimoto",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^14.4.0",
+    "jquery": "^3.2.1",
+    "jssha": "^2.3.0"
+  }
+}
