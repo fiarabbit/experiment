@@ -9,8 +9,9 @@
 namespace Hashimoto\Experiment\Controller;
 
 
+use Exception;
 use Hashimoto\Experiment\Model\MySQL;
-use Hashimoto\Experiment\Model\Protocol;
+use Hashimoto\Experiment\Model\History;
 use Hashimoto\Experiment\Model\UID;
 
 class LoginController {
@@ -33,12 +34,21 @@ class LoginController {
         $this->smarty->assign("msg",$msg);
         $this->smarty->display('login/login.tpl');
     }
+
+    /**
+     *
+     */
     public function newUser(){
-        $Protocol=new Protocol(UID::check(filter_input(INPUT_GET,"UID")));
+        $history=new History(UID::check(filter_input(INPUT_GET,"UID")));
         $mysql=new MySQL();
-        if(!$mysql->isUserExist($Protocol->getUID())){ // if not exist
-            $mysql->registerProtocol($Protocol);
-            print_r("registration succeeded");//todo redirect
+        if(!$mysql->isUserExist($history->getUID())){ // if not exist
+            try{
+                $mysql->registerHistory($history);
+                print_r("registration succeeded");
+                Session::setHistory(Session::SESSION_NAME,$history);//todo redirect
+            }catch (Exception $e){
+                var_dump($e);
+            }
         }else{
             $query=http_build_query(['MESSAGE'=>self::MESSAGE['duplication_error']]);
             header('Location: http://experiment.va/login/?MESSAGE=duplication_error');
@@ -49,7 +59,7 @@ class LoginController {
         $uid=UID::check(filter_input(INPUT_GET,"UID"));
         $mysql=new MySQL();
         if($mysql->isUserExist($uid)){
-           $mysql->deleteProtocol($uid);
+           $mysql->deleteHistoryByUID($uid);
         }
     }
 }

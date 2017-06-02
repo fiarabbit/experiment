@@ -10,7 +10,7 @@
     <schema id="4" parent="1" name="mysql"/>
     <schema id="5" parent="1" name="performance_schema"/>
     <schema id="6" parent="1" name="test"/>
-    <table id="7" parent="2" name="Protocol"/>
+    <table id="7" parent="2" name="History"/>
     <column id="8" parent="7" name="uid">
       <Position>1</Position>
       <DataType>text|0</DataType>
@@ -25,16 +25,20 @@
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <index id="11" parent="7" name="Protocol_pid_uindex">
+    <column id="11" parent="7" name="pointer">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <index id="12" parent="7" name="Protocol_pid_uindex">
       <ColNames>pid</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="12" parent="7" name="PRIMARY">
+    <key id="13" parent="7" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>pid</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="13" parent="7" name="Protocol_pid_uindex">
+    <key id="14" parent="7" name="Protocol_pid_uindex">
       <ColNames>pid</ColNames>
       <UnderlyingIndexName>Protocol_pid_uindex</UnderlyingIndexName>
     </key>

@@ -9,12 +9,12 @@
 namespace Hashimoto\Experiment\Controller;
 
 
-use Hashimoto\Experiment\Model\Protocol;
+use Hashimoto\Experiment\Model\History;
 
 class Session {
     const KEY_UID = 'uid';
-    const KEY_PROTOCOL = 'protocol';
-
+    const KEY_HISTORY = 'history';
+    const SESSION_NAME = 'exp1';
     static private $session_started;
     private static function sessionStart(string $session_name)
     {
@@ -24,23 +24,13 @@ class Session {
         }
         return self::$session_started;
     }
-    public static function checkUID(string $session_name){
+    public static function checkHistory(string $session_name){ // check if $_SESSION['protocol'] is set
         self::sessionStart($session_name);
-        return isset($_SESSION[self::KEY_UID]);
+        return isset($_SESSION[self::KEY_HISTORY]);
     }
-    public static function checkProtocol(string $session_name){
+    public static function setHistory(string $session_name, History $history){
         self::sessionStart($session_name);
-        return isset($_SESSION[self::KEY_PROTOCOL]);
-    }
-    public static function registerUID(string $session_name, string $user_id)
-    {
-        self::sessionStart($session_name);
-        $_SESSION[self::KEY_UID] = $user_id;
-        session_regenerate_id(true);
-    }
-    public static function registerProtocol(string $session_name, Protocol $protocol){
-        self::sessionStart($session_name);
-        $_SESSION[self::KEY_PROTOCOL] = $protocol;
+        $_SESSION[self::KEY_HISTORY] = $history->encodeJSONAll();
         session_regenerate_id(true);
     }
     public static function deleteSession(string $session_name)

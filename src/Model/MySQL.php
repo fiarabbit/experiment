@@ -23,7 +23,7 @@ class MySQL {
         }
     }
     public function isUserExist($UID) {
-        $stmt = $this->mysqli->prepare("SELECT exists (SELECT * FROM Protocol WHERE uid=?);");
+        $stmt = $this->mysqli->prepare("SELECT exists (SELECT * FROM History WHERE uid=?);");
         $stmt->bind_param('s', $UID);
         if($stmt->execute()){$stmt->bind_result($result);
             $stmt->fetch();
@@ -32,16 +32,15 @@ class MySQL {
         };
         return $result;
     }
-    public function registerProtocol(Protocol $protocol){
-        $uid=$protocol->getUID();
-        $protocolString=$protocol->convertString();
-        $stmt = $this->mysqli->prepare("INSERT INTO Protocol(uid, protocol) VALUES (?,?);");
-        $stmt->bind_param('ss',$uid,$protocolString);
+    public function registerHistory(History $history){
+        list($uid,$protocolJSON,$pointer)=[$history->getUID(),$history->encodeJSONProtocol(),$history->getPointer()];
+        $stmt = $this->mysqli->prepare("INSERT INTO History(uid, protocol,pointer) VALUES (?,?,?);");
+        $stmt->bind_param('ssi',$uid,$protocolJSON,$pointer);
         $result=$stmt->execute();
         return $result;
     }
-    public function deleteProtocol(string $uid){
-        $stmt = $this->mysqli->prepare("DELETE FROM Protocol WHERE uid=?;");
+    public function deleteHistoryByUID(string $uid){
+        $stmt = $this->mysqli->prepare("DELETE FROM History WHERE uid=?;");
         $stmt->bind_param('s',$uid);
         $result=$stmt->execute();
         return $result;
