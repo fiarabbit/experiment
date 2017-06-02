@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de9953d3-9fd1-481c-9e97-54ae9d247ce5" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Model/Protocol.php" afterPath="$PROJECT_DIR$/src/Model/History.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/8cd400be-1ccb-4f97-8fe3-8e205ee21e16.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/8cd400be-1ccb-4f97-8fe3-8e205ee21e16.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Controller/LoginController.php" afterPath="$PROJECT_DIR$/src/Controller/LoginController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Model/MySQL.php" afterPath="$PROJECT_DIR$/src/Model/MySQL.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Model/Session.php" afterPath="$PROJECT_DIR$/src/Model/Session.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -95,8 +90,8 @@
       <file leaf-file-name="LoginController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/LoginController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="693">
-              <caret line="47" column="66" lean-forward="false" selection-start-line="47" selection-start-column="66" selection-end-line="47" selection-end-column="66" />
+            <state relative-caret-position="1617">
+              <caret line="54" column="14" lean-forward="true" selection-start-line="54" selection-start-column="14" selection-end-line="54" selection-end-column="14" />
               <folding>
                 <element signature="e#139#153#0#PHP" expanded="true" />
               </folding>
@@ -241,8 +236,8 @@
         <option value="$PROJECT_DIR$/src/Controller/IndexController.php" />
         <option value="$PROJECT_DIR$/src/Model/MySQL.php" />
         <option value="$PROJECT_DIR$/src/Model/Session.php" />
-        <option value="$PROJECT_DIR$/src/Controller/LoginController.php" />
         <option value="$PROJECT_DIR$/src/Model/History.php" />
+        <option value="$PROJECT_DIR$/src/Controller/LoginController.php" />
       </list>
     </option>
   </component>
@@ -536,12 +531,12 @@
       <workItem from="1496311118122" duration="3147000" />
       <workItem from="1496384390634" duration="643000" />
       <workItem from="1496385476695" duration="2166000" />
-      <workItem from="1496398443747" duration="1294000" />
+      <workItem from="1496398443747" duration="1487000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65206000" />
+    <option name="totallyTimeSpent" value="65399000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="2586" height="1466" extended-state="6" />
@@ -964,8 +959,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/LoginController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="693">
-          <caret line="47" column="66" lean-forward="false" selection-start-line="47" selection-start-column="66" selection-end-line="47" selection-end-column="66" />
+        <state relative-caret-position="1617">
+          <caret line="54" column="14" lean-forward="true" selection-start-line="54" selection-start-column="14" selection-end-line="54" selection-end-column="14" />
           <folding>
             <element signature="e#139#153#0#PHP" expanded="true" />
           </folding>

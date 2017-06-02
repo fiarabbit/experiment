@@ -21,24 +21,27 @@ class LoginController {
     ];
     private $smarty;
 
+    // constructor
     function __construct() {
         $this->smarty=new \Smarty();
         $this->smarty->setTemplateDir(__DIR__ . "/../View");
     }
+
+    //private function
     private function showMessage($msg){
         $this->smarty->assign("msg",$msg);
         $this->smarty->display('login/login.tpl');
     }
-    public function show($msg=null){
+
+    //public function
+    public function show($msg=null){ // display
         $msg=$msg?:(self::MESSAGE[filter_input(INPUT_GET,"MESSAGE")]??'');
         $this->smarty->assign("msg",$msg);
         $this->smarty->display('login/login.tpl');
     }
 
-    /**
-     *
-     */
-    public function newUser(){
+
+    public function newUser(){ // receiver
         $history=new History(UID::check(filter_input(INPUT_GET,"UID")));
         $mysql=new MySQL();
         if(!$mysql->isUserExist($history->getUID())){ // if not exist
@@ -50,12 +53,11 @@ class LoginController {
                 var_dump($e);
             }
         }else{
-            $query=http_build_query(['MESSAGE'=>self::MESSAGE['duplication_error']]);
             header('Location: http://experiment.va/login/?MESSAGE=duplication_error');
             exit();
         };
     }
-    public function deleteUser(){
+    public function deleteUser(){ //for administration
         $uid=UID::check(filter_input(INPUT_GET,"UID"));
         $mysql=new MySQL();
         if($mysql->isUserExist($uid)){
