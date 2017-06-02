@@ -8,8 +8,10 @@
 
 namespace Hashimoto\Experiment\Router;
 
-use Hashimoto\Experiment\Controller\IndexController;
+use Hashimoto\Experiment\Controller\AdminController;
 use Hashimoto\Experiment\Controller\LoginController;
+use Hashimoto\Experiment\Controller\Session;
+use Hashimoto\Experiment\Model\Redirect;
 
 class Router {
     const HTTP_METHOD_GET = 'GET';
@@ -28,11 +30,15 @@ class Router {
         $controllerInstance = null;
         switch ($controller) {
             case 'index':
+                if(Session::checkHistory(Session::SESSION_NAME)){
+                    Redirect::redirect('exp','continue');
+                };
                 print_r('index was called');
-//                $controller = new IndexController();
-//                $controller->redirect();
                 break;
             case 'login':
+                if(Session::checkHistory(Session::SESSION_NAME)){
+                    Redirect::redirect('exp','continue');
+                };
                 $controllerInstance = new LoginController();
                 if(in_array($action,[null,''],true)){
                     $action="show";
@@ -50,6 +56,11 @@ class Router {
                     default:
                     throw new \Exception('invalid action parameter');
                 }
+                break;
+            case 'admin':
+                $controllerInstance = new AdminController();
+                $controllerInstance->clearSession();
+                print_r('Session has been cleared');
                 break;
             default:
                 print_r($path);
