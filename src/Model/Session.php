@@ -6,7 +6,7 @@
  * Time: 6:36 PM
  */
 
-namespace Hashimoto\Experiment\Controller;
+namespace Hashimoto\Experiment\Model;
 
 
 use Hashimoto\Experiment\Model\History;

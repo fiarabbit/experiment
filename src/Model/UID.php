@@ -12,9 +12,10 @@ namespace Hashimoto\Experiment\Model;
 use InvalidArgumentException;
 
 class UID {
-static function check(string $candidate){
+static function check($candidate){
+    $candidate=$candidate??"";
     if ($candidate===""){
-        throw new InvalidArgumentException('Expected string, but caught null string.');
+        throw new InvalidArgumentException('NullStringError');
     }else{
         return $candidate;
     }

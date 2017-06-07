@@ -6,11 +6,10 @@
 </head>
 <body>
 <div>{$msg}</div>
-<form id="form" action="newUser" method="get">
+<form id="form" action="{$PREFIX}/login/newUser" method="get">
     <label>
         Your Name:<input name="UID" size="40" id="input">
     </label>
 </form>
-{*<script src=/bundle.js></script>*}
 </body>
 </html>

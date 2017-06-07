@@ -12,6 +12,9 @@ namespace Hashimoto\Experiment\Controller;
 use Exception;
 use Hashimoto\Experiment\Model\MySQL;
 use Hashimoto\Experiment\Model\History;
+use Hashimoto\Experiment\Model\Redirect;
+use Hashimoto\Experiment\Model\Session;
+use Hashimoto\Experiment\Model\SmartyExtension;
 use Hashimoto\Experiment\Model\UID;
 
 class LoginController {
@@ -23,8 +26,7 @@ class LoginController {
 
     // constructor
     function __construct() {
-        $this->smarty=new \Smarty();
-        $this->smarty->setTemplateDir(__DIR__ . "/../View");
+        $this->smarty=SmartyExtension::getSmarty();
     }
 
     //private function
@@ -49,19 +51,14 @@ class LoginController {
                 $mysql->registerHistory($history);
                 print_r("registration succeeded");
                 Session::setHistory(Session::SESSION_NAME,$history);//todo redirect
+                Redirect::redirect('experiment','start');
             }catch (Exception $e){
                 var_dump($e);
             }
         }else{
-            header('Location: http://experiment.va/login/?MESSAGE=duplication_error');
+            Redirect::redirectWithParameter('login','',['MESSAGE'=>'duplication_error']);
             exit();
         };
     }
-    public function deleteUser(){ //for administration
-        $uid=UID::check(filter_input(INPUT_GET,"UID"));
-        $mysql=new MySQL();
-        if($mysql->isUserExist($uid)){
-           $mysql->deleteHistoryByUID($uid);
-        }
-    }
+
 }

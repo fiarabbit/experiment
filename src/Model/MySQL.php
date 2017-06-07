@@ -32,6 +32,24 @@ class MySQL {
         };
         return $result;
     }
+    public function getAllHistory(){
+        $arr=[];
+        if($result=$this->mysqli->query("SELECT * FROM History")){
+            while($row=$result->fetch_assoc()){
+                array_push($arr,$row);
+            }
+        };
+        return $arr;
+    }
+    public function getAllUID(){
+        $arr=[];
+        if($result=$this->mysqli->query("SELECT uid FROM History")){
+            while($row=$result->fetch_row()){
+                array_push($arr,$row[0]);
+            }
+        };
+        return $arr;
+    }
     public function registerHistory(History $history){
         list($uid,$protocolJSON,$pointer)=[$history->getUID(),$history->encodeJSONProtocol(),$history->getPointer()];
         $stmt = $this->mysqli->prepare("INSERT INTO History(uid, protocol,pointer) VALUES (?,?,?);");
