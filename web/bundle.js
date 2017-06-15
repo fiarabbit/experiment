@@ -5781,7 +5781,7 @@ function domManip( collection, args, callback, ignored ) {
 
 						if ( node.src ) {
 
-							// Optional AJAX dependency, but won't run scripts if not present
+							// Optional sendData dependency, but won't run scripts if not present
 							if ( jQuery._evalUrl ) {
 								jQuery._evalUrl( node.src );
 							}
@@ -8506,7 +8506,7 @@ var
 	rprotocol = /^\/\//,
 
 	/* Prefilters
-	 * 1) They are useful to introduce custom dataTypes (see ajax/jsonp.js for an example)
+	 * 1) They are useful to introduce custom dataTypes (see sender/jsonp.js for an example)
 	 * 2) These are called:
 	 *    - BEFORE asking for a transport
 	 *    - AFTER param serialization (s.data is a string if s.processData is true)
@@ -8591,7 +8591,7 @@ function inspectPrefiltersOrTransports( structure, options, originalOptions, jqX
 	return inspect( options.dataTypes[ 0 ] ) || !inspected[ "*" ] && inspect( "*" );
 }
 
-// A special extend for ajax options
+// A special extend for sender options
 // that takes "flat" options (not to be deep extended)
 // Fixes #9887
 function ajaxExtend( target, src ) {
@@ -8610,7 +8610,7 @@ function ajaxExtend( target, src ) {
 	return target;
 }
 
-/* Handles responses to an ajax request:
+/* Handles responses to an sender request:
  * - finds the right dataType (mediates between content-type and expected dataType)
  * - returns the corresponding response
  */
@@ -9290,7 +9290,7 @@ jQuery.extend( {
 			if ( fireGlobals ) {
 				globalEventContext.trigger( "ajaxComplete", [ jqXHR, s ] );
 
-				// Handle the global AJAX counter
+				// Handle the global sendData counter
 				if ( !( --jQuery.active ) ) {
 					jQuery.event.trigger( "ajaxStop" );
 				}
@@ -9320,7 +9320,7 @@ jQuery.each( [ "get", "post" ], function( i, method ) {
 		}
 
 		// The url can be an options object (which then must have .url)
-		return jQuery.ajax( jQuery.extend( {
+		return jQuery.sender( jQuery.extend( {
 			url: url,
 			type: method,
 			dataType: type,
@@ -9332,7 +9332,7 @@ jQuery.each( [ "get", "post" ], function( i, method ) {
 
 
 jQuery._evalUrl = function( url ) {
-	return jQuery.ajax( {
+	return jQuery.sender( {
 		url: url,
 
 		// Make this explicit, since user can override this through ajaxSetup (#11264)
@@ -9441,7 +9441,7 @@ var xhrSuccessStatus = {
 	xhrSupported = jQuery.ajaxSettings.xhr();
 
 support.cors = !!xhrSupported && ( "withCredentials" in xhrSupported );
-support.ajax = xhrSupported = !!xhrSupported;
+support.sender = xhrSupported = !!xhrSupported;
 
 jQuery.ajaxTransport( function( options ) {
 	var callback, errorCallback;
@@ -9642,7 +9642,7 @@ jQuery.ajaxTransport( "script", function( s ) {
 					}
 				);
 
-				// Use native DOM manipulation to avoid our domManip AJAX trickery
+				// Use native DOM manipulation to avoid our domManip sendData trickery
 				document.head.appendChild( script[ 0 ] );
 			},
 			abort: function() {
@@ -9842,7 +9842,7 @@ jQuery.fn.load = function( url, params, callback ) {
 
 	// If we have elements to modify, make the request
 	if ( self.length > 0 ) {
-		jQuery.ajax( {
+		jQuery.sender( {
 			url: url,
 
 			// If "type" variable is undefined, then "GET" method will be used.
@@ -9881,7 +9881,7 @@ jQuery.fn.load = function( url, params, callback ) {
 
 
 
-// Attach a bunch of functions for handling common AJAX events
+// Attach a bunch of functions for handling common sendData events
 jQuery.each( [
 	"ajaxStart",
 	"ajaxStop",
@@ -10263,7 +10263,7 @@ $(function($) {
     $form.submit(function(event) {
         console.log('called');
         event.preventDefault();
-        $.ajax({
+        $.sender({
             url: 'newUser',
             type: 'GET',
             data: {"UID":$('#input').val()},

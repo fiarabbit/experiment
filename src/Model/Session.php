@@ -33,6 +33,14 @@ class Session {
         $_SESSION[self::KEY_HISTORY] = $history->encodeJSONAll();
         session_regenerate_id(true);
     }
+
+    public static function getHistory(string $session_name):History{
+        if(self::checkHistory($session_name)){
+            return $_SESSION[self::KEY_HISTORY];
+        }else{
+            throw new \Exception('NoSession');
+        }
+    }
     public static function deleteSession(string $session_name)
     {
         self::sessionStart($session_name);

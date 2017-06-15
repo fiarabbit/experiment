@@ -21,7 +21,6 @@ class AdminController {
         'deleteSession',
         'deleteUser'
     ];
-    const PREFIX='http://experiment.va';
     private $smarty;
 
     //constructor
@@ -29,7 +28,6 @@ class AdminController {
         $this->smarty=SmartyExtension::getSmarty();
         $this->smarty->assign([
             "ACTION"=>self::ACTION,
-            "PREFIX"=>self::PREFIX
         ]);
     }
 

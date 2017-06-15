@@ -11,12 +11,15 @@ namespace Hashimoto\Experiment\Router;
 use Hashimoto\Experiment\Controller\AdminController;
 use Hashimoto\Experiment\Controller\ExperimentController;
 use Hashimoto\Experiment\Controller\LoginController;
+use Hashimoto\Experiment\Model\Cookie;
 use Hashimoto\Experiment\Model\Session;
 use Hashimoto\Experiment\Model\Redirect;
 
 class Router {
     const HTTP_METHOD_GET = 'GET';
     const HTTP_METHOD_POST = 'POST';
+
+    const DEFAULT_CONTROLLER = 'login';
     public static function dispatcher()
     {
         // 0. URI分解
@@ -25,24 +28,32 @@ class Router {
             $path = explode('?', $_SERVER['REQUEST_URI'])[0];
             $params = explode('/', $path);
         }
-        // /controller/action
-        $controller = $params[1] ?: 'index'; // login, experiment, "else" index
+        // URI: [PREFIX]/controller/action
+        $controller = $params[1]?:self::DEFAULT_CONTROLLER; // login, experiment, ...etc
+
+        // 1st priority: Information in Session['history']
+        if($controller!=='admin'&&Session::checkHistory(Session::SESSION_NAME)){
+            try{
+                Redirect::redirectThis(Session::getHistory(Session::SESSION_NAME));
+            }catch(\Exception $e){
+                Session::deleteSession(Session::SESSION_NAME);
+                if(!$_COOKIE["reload"]) {
+                    Cookie::setJSONCookie(["reload" => true]);
+                    Redirect::redirectSelf();
+                }else{
+                    var_dump($e);
+                    exit();
+                }
+            }
+        }
+        // else
         if(!isset($params[2])){ // to avoid null action
             Redirect::redirect($controller,'');
         }
         $action = $params[2] ?? null;
-        if(Session::checkHistory(Session::SESSION_NAME)){
-            Redirect::redirect('experiment','continue');
-        };
         // パラメータより取得したコントローラー名によりクラス振分け
         $controllerInstance = null;
         switch ($controller) {
-            case 'index':
-                if(Session::checkHistory(Session::SESSION_NAME)){
-                    Redirect::redirect('experiment','continue');
-                };
-                print_r('index was called');
-                break;
             case 'login':
                 $controllerInstance = new LoginController();
                 if(in_array($action,[null,''],true)){
@@ -55,11 +66,8 @@ class Router {
                     case "newUser":
                         $controllerInstance->newUser(); // $_GETからパラメータを入手して登録する
                         break;
-                    case "deleteUser":
-                        $controllerInstance->deleteUser();
-                        break;
                     default:
-                    throw new \Exception('invalid action parameter');
+                        print_r('invalid action');
                 }
                 break;
             case 'admin':
@@ -87,9 +95,6 @@ class Router {
             case 'experiment':
                 $controllerInstance = new ExperimentController();
                 switch ($action){
-                    case "start":
-                        $controllerInstance->start();
-                        break;
                     case "adjust":
                         $controllerInstance->adjust();
                         break;
@@ -98,7 +103,7 @@ class Router {
                 }
                 break;
             default:
-                print_r($path);
+                print_r("${path} does not exist.");
 //                header("HTTP/1.0 404 Not Found");
                 exit();
                 break;

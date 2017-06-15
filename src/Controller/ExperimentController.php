@@ -9,8 +9,7 @@
 namespace Hashimoto\Experiment\Controller;
 
 
-use Hashimoto\Experiment\Model\Cookie;
-use Hashimoto\Experiment\Model\Redirect;
+use Hashimoto\Experiment\Controller\Experiment\AdjustController;
 use Hashimoto\Experiment\Model\SmartyExtension;
 
 class ExperimentController {
@@ -19,14 +18,24 @@ class ExperimentController {
     function __construct() {
         $this->smarty=SmartyExtension::getSmarty();
     }
-    public function start(){
-        Redirect::redirect('experiment','adjust');
-    }
     public function adjust(){
-        Cookie::setJSONCookie([
-            'var1'=>[71,72,73],
-            'var2'=>[7,6,5]
-        ]);
-        $this->smarty->display('experiment/adjust.tpl');
+        $smarty=$this->smarty;
+        $controller=new AdjustController($smarty);
+        $params=[];
+        if ('' !== $_SERVER['REQUEST_URI']) {
+            $path = explode('?', $_SERVER['REQUEST_URI'])[0];
+            $params = explode('/', $path);
+        }
+        $action=empty($params[3])?'show':$params[3];
+        switch($action){
+            case 'show':
+                $controller->show();
+                break;
+            case 'sendData':
+                $controller->sendData();
+                break;
+            default:
+                print_r('invalid action parameter');
+        }
     }
 }

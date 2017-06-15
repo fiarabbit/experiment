@@ -10,6 +10,7 @@ namespace Hashimoto\Experiment\Controller;
 
 
 use Exception;
+use Hashimoto\Experiment\Model\Cookie;
 use Hashimoto\Experiment\Model\MySQL;
 use Hashimoto\Experiment\Model\History;
 use Hashimoto\Experiment\Model\Redirect;
@@ -47,14 +48,8 @@ class LoginController {
         $history=new History(UID::check(filter_input(INPUT_GET,"UID")));
         $mysql=new MySQL();
         if(!$mysql->isUserExist($history->getUID())){ // if not exist
-            try{
-                $mysql->registerHistory($history);
-                print_r("registration succeeded");
-                Session::setHistory(Session::SESSION_NAME,$history);//todo redirect
-                Redirect::redirect('experiment','start');
-            }catch (Exception $e){
-                var_dump($e);
-            }
+            Cookie::setJSONCookie(['uid'=>$history->getUID()]); // Cookie
+            Redirect::redirectNext($history); // Session, MySQL (Server Side)
         }else{
             Redirect::redirectWithParameter('login','',['MESSAGE'=>'duplication_error']);
             exit();
