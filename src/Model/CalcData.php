@@ -10,26 +10,36 @@ namespace Hashimoto\Experiment\Model;
 
 
 class CalcData {
+    const CLIENT_NAN=99999;
+    const SERVER_NAN=-1;
     const CLIENT_PROPERTY=[
-        'uid',
         'qid',
+        'timeOver',//
+        'timeLimit',
         'displayTime',
         'answerTime',
         'var1',
         'var2',
-        'answer'
+        'answer',
+        'times',
+        'username',//
+        'hash'//
     ];
     const SERVER_PROPERTY=[
-        'uid',
-        'qid',
+        'username',
         'var1',
         'var2',
         'answer',
+        'rt',
+        'qid',
         'correct',
-        'rt'
+        'timeOver',
+        'timeLimit',
+        'hash',
+        'times'
     ];
 static public function getClientSideData():array {
-    $cliArr=[];
+    $cliAssoc=[];
     foreach (self::CLIENT_PROPERTY as $value){
         $v=filter_input(INPUT_GET,$value);
         if($v=='NaN'){
@@ -37,39 +47,58 @@ static public function getClientSideData():array {
         }
         switch ($value){
             case 'qid':
+            case 'timeLimit':
             case 'displayTime':
             case 'answerTime':
             case 'var1':
             case 'var2':
             case 'answer':
+            case 'times':
                 $v=(int)$v;
+                if($v===self::CLIENT_NAN){
+                    $v=self::SERVER_NAN;
+                }
                 break;
+            case 'timeOver':
+                $v=($v==='true');
+                break;
+            case 'username':
+            case 'hash':
             default:
                 break;
         }
-        $cliArr[$value]=$v;
+        $cliAssoc[$value]=$v;
     }
-    return $cliArr;
+    return $cliAssoc;
 }
-static public function convertClientToServer(array $cliArr):array {
-    $srvArr=[];
+static public function convertClientToServer(array $cliAssoc):array {
+    $srvAssoc=[];
     foreach (self::SERVER_PROPERTY as $value){
         switch ($value){
-            case 'uid':
+            case 'username':
+            case 'hash':
             case 'qid':
+            case 'timeOver':
+            case 'timeLimit':
             case 'var1':
             case 'var2':
             case 'answer':
-                $srvArr[$value]=$cliArr[$value];
+            case 'times':
+                $srvAssoc[$value]=$cliAssoc[$value];
                 break;
             case 'correct':
-                $srvArr[$value]=($cliArr['var1']*$cliArr['var2'])===$cliArr['answer'];
+                $srvAssoc[$value]=($cliAssoc['var1']*$cliAssoc['var2'])===$cliAssoc['answer'];
                 break;
             case 'rt':
-                $srvArr[$value]=($cliArr['answerTime']-$cliArr['displayTime']);
+                $v=$cliAssoc['answerTime']-$cliAssoc['displayTime'];
+                if($v>0){
+                    $srvAssoc[$value]=$v;
+                }else{
+                    $srvAssoc[$value]=self::SERVER_NAN;
+                }
                 break;
         }
     }
-    return $srvArr;
+    return $srvAssoc;
 }
 }

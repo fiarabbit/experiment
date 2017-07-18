@@ -9,10 +9,11 @@
 namespace Hashimoto\Experiment\Controller;
 
 
+use Hashimoto\Experiment\Model\Constant;
 use Hashimoto\Experiment\Model\MySQL;
+use Hashimoto\Experiment\Model\Redirect;
 use Hashimoto\Experiment\Model\Session;
 use Hashimoto\Experiment\Model\SmartyExtension;
-use Hashimoto\Experiment\Model\UID;
 
 class AdminController {
     const ACTION = [
@@ -21,6 +22,7 @@ class AdminController {
         'deleteSession',
         'deleteUser'
     ];
+    const USERNAME_ALIAS='username';
     private $smarty;
 
     //constructor
@@ -28,6 +30,8 @@ class AdminController {
         $this->smarty=SmartyExtension::getSmarty();
         $this->smarty->assign([
             "ACTION"=>self::ACTION,
+            "USERNAME_ALIAS"=>self::USERNAME_ALIAS,
+            "MESSAGE"=>$_GET['MESSAGE']??''
         ]);
     }
 
@@ -36,30 +40,27 @@ class AdminController {
     }
     public function deleteUser(){ //for administration
         $mysql=new MySQL();
-        try {
-            $uid = UID::check(filter_input(INPUT_GET, "UID"));
-            if($mysql->isUserExist($uid)){
-                $mysql->deleteHistoryByUID($uid);
-                print_r($uid ." has been deleted");
-            }
-        }catch(\Exception $e){
-            if($e->getMessage()==='NullStringError'){
-                $arr=$mysql->getAllUID();
-                $this->smarty->assign([
-                    "arr"=>$arr
-                ]);
-                $this->smarty->display('admin/deleteUser.tpl');
-            }
+        switch(filter_input(INPUT_SERVER,'REQUEST_METHOD')){
+            case 'GET':
+                $this->smarty->assign('MESSAGE','');
+                break;
+            case 'POST':
+                $username=filter_input(INPUT_POST,self::USERNAME_ALIAS);
+                if($mysql->deleteUser($username)){
+                    $this->smarty->assign('MESSAGE','Deleted ' . $username . ' .');
+                }else{
+                    $this->smarty->assign('MESSAGE','Unable to delete ' . $username . ' .');
+                }
+                break;
+            default:
+                header("HTTP/1.0 404 Not Found");
+                exit();
         }
+        $this->smarty->assign('arr',$mysql->getAllUsername());
+        $this->smarty->display('admin/deleteUser.tpl');
     }
     public function deleteSession() {
-        Session::deleteSession(Session::SESSION_NAME);
-    }
-
-    public function showDatabase() {
-        $mysql = new MySQL();
-        $arr = $mysql->getAllHistory();
-        print_r("All histories:");
-        var_dump($arr);
+        Session::deleteSession();
+        Redirect::redirectWithParameter('admin','',['MESSAGE'=>'Session has been deleted.']);
     }
 }

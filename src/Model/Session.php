@@ -9,46 +9,40 @@
 namespace Hashimoto\Experiment\Model;
 
 
-use Hashimoto\Experiment\Model\History;
-
 class Session {
-    const KEY_UID = 'uid';
-    const KEY_HISTORY = 'history';
+    const KEY_USERNAME='username';
     const SESSION_NAME = 'exp1';
     static private $session_started;
-    private static function sessionStart(string $session_name)
+
+    static private function sessionStart()
     {
         if (!self::$session_started) {
-            session_name($session_name);
+            session_name(self::SESSION_NAME);
             self::$session_started = session_start();
         }
         return self::$session_started;
     }
-    public static function checkHistory(string $session_name){ // check if $_SESSION['protocol'] is set
-        self::sessionStart($session_name);
-        return isset($_SESSION[self::KEY_HISTORY]);
-    }
-    public static function setHistory(string $session_name, History $history){
-        self::sessionStart($session_name);
-        $_SESSION[self::KEY_HISTORY] = $history->encodeJSONAll();
-        session_regenerate_id(true);
-    }
-
-    public static function getHistory(string $session_name):History{
-        if(self::checkHistory($session_name)){
-            return $_SESSION[self::KEY_HISTORY];
+    static public function getUsername(){
+    // usernameをSessionに持っているかを確認する．あったらusernameを返す．なければfalseを返す
+        self::sessionStart();
+        if (isset ($_SESSION[self::KEY_USERNAME])){
+            return $_SESSION[self::KEY_USERNAME];
         }else{
-            throw new \Exception('NoSession');
+            return false;
         }
     }
-    public static function deleteSession(string $session_name)
+    static public function setUsername(string $username){
+        self::sessionStart();
+        $_SESSION[self::KEY_USERNAME]=$username;
+    }
+    static public function deleteSession()
     {
-        self::sessionStart($session_name);
+        self::sessionStart();
         session_destroy();
         $_SESSION = [];
         self::$session_started = false;
-        if (isset($_COOKIE[$session_name])) {
-            setcookie($session_name, '', time() - 1800, '/');
+        if (isset($_COOKIE[self::SESSION_NAME])) {
+            setcookie(self::SESSION_NAME, '', time() - 1800, '/');
         }
     }
 

@@ -1,0 +1,29 @@
+body {
+}
+
+#container {
+    width: 18cm;
+    height: 74px;
+    top:0;
+    bottom: 250px;
+    left:0;
+    right:0;
+    position:absolute;
+    margin: auto;
+    display: inline-block;
+}
+.qa{
+padding-top:10px;
+padding-bottom:10px;
+font-size: 30px;
+    width:100%
+}
+.question{
+width:100%;
+text-align: left;
+}
+.answer{
+height: 50px;
+width: 100%;
+border: solid;
+}

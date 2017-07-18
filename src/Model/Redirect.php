@@ -10,27 +10,22 @@ namespace Hashimoto\Experiment\Model;
 
 
 class Redirect {
-    const PREFIX='http://experiment.va';
-
-    static function redirectSelf(){
-        header("Location: " . $_SERVER['PHP_SELF']);
-    }
-
-    static function redirect(string $controller, string $action){
-        header('Location: ' . self::PREFIX . '/' . $controller . '/' . $action);
+    static function redirect(string $controller, string $action) {
+        header('Location: ' . Constant::PREFIX . '/' . $controller . '/' . $action);
         exit();
     }
-    static function redirectWithParameter(string $controller, string $action, array $queryData){
-        $query=http_build_query($queryData);
-        header('Location: ' . self::PREFIX . '/' . $controller . '/' . $action . '?' . $query);
+
+    static function redirectWithParameter(string $controller, string $action, array $queryData) {
+        $query = http_build_query($queryData);
+        header('Location: ' . Constant::PREFIX . '/' . $controller . '/' . $action . '?' . $query);
+        exit();
     }
-    // history control
-    static function redirectNext(History $history){
-        list($controller,$action)=$history->next();
-        self::redirect($controller,$action);
-    }
-    static function redirectThis(History $history){
-        list($controller,$action)=$history->this();
-        self::redirect($controller,$action);
+
+    static function redirectByPointer($pointer) {
+        $controller = Constant::getController($pointer);
+        $action=Constant::DEFAULT_ACTION[$controller];
+        $times = Constant::getTimes($pointer);
+        header('Location: ' . Constant::PREFIX . '/' . $controller . '/' . $action . '?times=' . $times);
+        exit();
     }
 }

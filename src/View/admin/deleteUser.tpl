@@ -5,9 +5,10 @@
   <title> </title>
 </head>
 <body>
-<form id="form" action="{$PREFIX}/login/deleteUser" method="get">
+<div>{$MESSAGE}</div>
+<form id="form" action="{$PREFIX}/admin/deleteUser" method="post">
   <label>
-    Delete User Name:<input name="UID" size="40" id="input">
+    Delete User Name:<input name={$USERNAME_ALIAS} size="40" id="input">
   </label>
 </form>
 <ul>

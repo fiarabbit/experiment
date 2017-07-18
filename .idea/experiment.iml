@@ -31,5 +31,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="mousetrap" level="application" />
   </component>
 </module>
