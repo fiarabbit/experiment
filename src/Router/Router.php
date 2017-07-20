@@ -74,7 +74,9 @@ class Router {
                             $controllerInstance->deleteSession();
                             print_r('Session has been deleted');
                             break;
-
+                        case "setPointer":
+                            $controllerInstance->setPointer();
+                            break;
                         default:
                             print_r('invalid action');
                     }
