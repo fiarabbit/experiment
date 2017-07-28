@@ -14,7 +14,7 @@ class Session {
     const SESSION_NAME = 'exp1';
     static private $session_started;
 
-    static private function sessionStart()
+    static function sessionStart()
     {
         if (!self::$session_started) {
             session_name(self::SESSION_NAME);
@@ -41,9 +41,8 @@ class Session {
         session_destroy();
         $_SESSION = [];
         self::$session_started = false;
-        if (isset($_COOKIE[self::SESSION_NAME])) {
-            setcookie(self::SESSION_NAME, '', time() - 1800, '/');
-        }
+        self::sessionStart();
+        session_regenerate_id();
     }
 
 }
