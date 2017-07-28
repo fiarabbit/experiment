@@ -166,7 +166,7 @@
                     }
 
                     function constraint(var1, var2) {
-                        return ((var1 * var2) % 10 !== 0) && (var1 % 10 !== 1) && (var2 % 10 !== 1) && ((var1 * var2) < 100) && !((var1 === previous_var1) && (var2 === previous_var2));
+                        return ((var1 * var2) % 10 !== 0) && (var1 % 10 !== 1) && (var2 % 10 !== 1) && ((var1 * var2) > 100) && !((var1 === previous_var1) && (var2 === previous_var2));
                     }
 
                     let question = {
@@ -328,12 +328,12 @@
         let incorrectCounter = 0;
         let correctCounter = 0;
         const incorrectThreshold = 0; //0
-        const correctThreshold = 0; //1
+        const correctThreshold = 1; //1
         let stepCounter = 0;
         let formerStep;
         let nextValue;
         let ended = false;
-        const stepCounterThreshold = 1  ;//8
+        const stepCounterThreshold = 8  ;//8
         let reference = {
             downStep: function () {
                 stepSize = stepSize * (1 - StepStepSize);
