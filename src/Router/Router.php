@@ -36,8 +36,7 @@ class Router {
         if (!in_array($controller, ['admin', 'login'])) {
             if (Constant::DEFAULT_ACTION[$controller]??null === $action) {
                 $mysql = new MySQL();
-                if ($pointerArr = $mysql->fetchUserInfo(Session::getUsername(), ['pointer'])) {
-                    $pointer = $pointerArr[0];
+                if ($pointer = (int)$mysql->fetchUserInfo(Session::getUsername(), ['pointer'])[0]) {
                     if ($controller !== Constant::getController($pointer)) {
                         Redirect::redirectByPointer($pointer);
                     }
@@ -167,12 +166,13 @@ class Router {
                     break;
             }
         }catch(\Exception $e){
-            switch($e->getMessage()){
-                case 'NoUsername':
-                    $controller=Constant::DEFAULT_CONTROLLER;
-                    $action=Constant::DEFAULT_ACTION[$controller];
-                    Redirect::redirect($controller,$action);
-            }
+            var_dump($e);exit();
+//            switch($e->getMessage()){
+//                case 'NoUsername':
+//                    $controller=Constant::DEFAULT_CONTROLLER;
+//                    $action=Constant::DEFAULT_ACTION[$controller];
+//                    Redirect::redirect($controller,$action);
+//            }
         }
     }
 }

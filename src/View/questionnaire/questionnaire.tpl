@@ -7,15 +7,19 @@
 </head>
 <body>
 <div id="container">
-    {foreach from=$arrArr key=key item=value}
-        <div class="qa" id="qa-{$key}">
-            <div class="question" id="question-{$key}" style="">{$value}</div>
-            <div class="answer" id="answer-{$key}" style=""></div>
+    {foreach from=$arrArr key=keyQ item=valueQ}
+        <div class="qa" id="qa-{$keyQ}">
+            <div class="question" id="question-{$keyQ}" style="">{$valueQ}</div>
+            <div class="answer" id="answer-{$keyQ}" style="">
+                {foreach from=$answerChoice key=keyA item=valueA}
+                    <div class="choice choice-{$keyA}" id="choice-{$keyA}-answer-{$keyQ}">{$valueA}</div>
+                {/foreach}
+            </div>
         </div>
     {/foreach}
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdn.rawgit.com/ccampbell/mousetrap/825ce50c/mousetrap.min.js"></script>
+<script src="https://cdn.rawgit.com/RobertWHurst/KeyboardJS/master/dist/keyboard.js" type="text/javascript"></script>
 <script src="/assets/js/questionnaire.js"></script>
 </body>
 </html>

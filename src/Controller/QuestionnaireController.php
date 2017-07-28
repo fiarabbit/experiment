@@ -33,8 +33,10 @@ class QuestionnaireController {
         $qid = $qid??0;
         $times = Constant::getTimes($pointer);
         $hash = bin2hex(random_bytes(Constant::HASH_LENGTH));
+        list($arrArr,$answerChoice)= $mysql->getQuestionnaire();
         $this->smarty->assign([
-            'arrArr' => $mysql->getQuestionnaire()
+            'arrArr' => $arrArr,
+            'answerChoice' => $answerChoice
         ]);
         Cookie::setJSONCookie([
             'username' => $username,

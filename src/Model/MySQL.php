@@ -32,6 +32,7 @@ class MySQL {
             echo "Failed to connect to MySQL: " . mysqli_connect_error();
         }
     }
+
     private function escapeValue($value) {
         return '"' . mysqli_real_escape_string($this->mysqli, (string)$value) . '"';
     }
@@ -59,23 +60,23 @@ class MySQL {
             $v = $this->escapeValue($value);
             $q = $q . "${k}=${v},";
         }
-        $k=$this->escapeColumn($specifyingColName);
-        $v=$this->escapeValue($assoc[$specifyingColName]);
-        $q = substr($q, 0, -1). " WHERE ${k}=${v};";
+        $k = $this->escapeColumn($specifyingColName);
+        $v = $this->escapeValue($assoc[$specifyingColName]);
+        $q = substr($q, 0, -1) . " WHERE ${k}=${v};";
         return $q;
     }
 
-    private function assocToDUPLICATE(array $assoc, string $table){
-        $q=substr($this->assocToINSERT($assoc,$table),0,-1). " ON DUPLICATE KEY UPDATE ";
+    private function assocToDUPLICATE(array $assoc, string $table) {
+        $q = substr($this->assocToINSERT($assoc, $table), 0, -1) . " ON DUPLICATE KEY UPDATE ";
         foreach ($assoc as $key => $value) {
             $k = $this->escapeColumn($key);
             $q = $q . "${k}=VALUES(${k}),";
         }
-        $q=substr($q,0,-1);
-        return $q.";";
+        $q = substr($q, 0, -1);
+        return $q . ";";
     }
 
-    public function getErrorMessage(){
+    public function getErrorMessage() {
         return $this->errorMessage??$this->mysqli->error;
     }
 
@@ -93,15 +94,16 @@ class MySQL {
             return false;
         }
     }
+
     public function fetchUserInfo(string $username, array $columns) {
         if ($this->isUserExist($username)) {
-            $q="";
-            foreach ($columns as $_c){
+            $q = "";
+            foreach ($columns as $_c) {
                 $c = $this->escapeColumn($_c);
-                $q=$q.$c.",";
+                $q = $q . $c . ",";
             }
-            $q=substr($q,0,-1);
-            $username=$this->escapeValue($username);
+            $q = substr($q, 0, -1);
+            $username = $this->escapeValue($username);
             $query = "SELECT ${q} FROM User WHERE `username`=${username} LIMIT 1;";
             if ($result = $this->mysqli->query($query)) {
                 $r = $result->fetch_row();
@@ -113,7 +115,8 @@ class MySQL {
             return false;
         }
     }
-    public function insertAndUpdateUser(string $username, array $assoc, int $mode):bool {
+
+    public function insertAndUpdateUser(string $username, array $assoc, int $mode): bool {
         $assoc['username'] = $username;
         $queryUserTransaction = $this->assocToINSERT($assoc, 'UserTransaction');
         switch ($mode) {
@@ -121,29 +124,30 @@ class MySQL {
                 $queryUser = $this->assocToINSERT($assoc, 'User');
                 break;
             case self::UPDATE:
-                $queryUser = $this->assocToUPDATE($assoc,'username', 'User');
+                $queryUser = $this->assocToUPDATE($assoc, 'username', 'User');
                 break;
             case self::DUPLICATE:
-                $queryUser = $this->assocToDUPLICATE($assoc,'User');
+                $queryUser = $this->assocToDUPLICATE($assoc, 'User');
                 break;
             default:
                 throw new \Exception('\$mode must be chosen from MySQL::const');
         }
         $this->mysqli->begin_transaction();
-        if ($qu_res=$this->mysqli->query($queryUser) && $qut_res=$this->mysqli->query($queryUserTransaction)) {
+        if ($qu_res = $this->mysqli->query($queryUser) && $qut_res = $this->mysqli->query($queryUserTransaction)) {
             $this->mysqli->commit();
             return true;
         } else {
-            $this->errorMessage=$this->mysqli->error;
+            $this->errorMessage = $this->mysqli->error;
             $this->mysqli->rollback();
             return false;
         }
     }
+
     public function deleteUser(string $username): bool {
         if (!$this->isUserExist($username)) {
             return false;
         } else {
-            $username=$this->escapeValue($username);
+            $username = $this->escapeValue($username);
             $query = "DELETE FROM User WHERE `username`=${username};";
             if ($this->mysqli->query($query)) {
                 return true;
@@ -152,6 +156,7 @@ class MySQL {
             }
         }
     }
+
     public function getAllUsername(): array {
         $ret = [];
         $query = "SELECT `username` FROM User;";
@@ -174,56 +179,68 @@ class MySQL {
             return false;
         }
     }
-    public function insertServerSideQuesData(array $srvAssoc): bool{
-        if(!isset($srvAssoc['username'])||!$this->isUserExist($srvAssoc['username'])){
+
+    public function insertServerSideQuesData(array $srvAssoc): bool {
+        if (!isset($srvAssoc['username']) || !$this->isUserExist($srvAssoc['username'])) {
             throw new \Exception('NoUserSQL');
         }
-        $query=$this->assocToINSERT($srvAssoc,'QuestionnaireTransaction');
-        if($this->mysqli->query($query)){
+        $query = $this->assocToINSERT($srvAssoc, 'QuestionnaireTransaction');
+        if ($this->mysqli->query($query)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-    public function insertServerSideAnotherData(array $srvAssoc): bool{
-        if(!isset($srvAssoc['username'])||!$this->isUserExist($srvAssoc['username'])){
+
+    public function insertServerSideAnotherData(array $srvAssoc): bool {
+        if (!isset($srvAssoc['username']) || !$this->isUserExist($srvAssoc['username'])) {
             throw new \Exception('NoUserSQL');
         }
-        $query=$this->assocToINSERT($srvAssoc,'AnotherTransaction');
-        if($this->mysqli->query($query)){
+        $query = $this->assocToINSERT($srvAssoc, 'AnotherTransaction');
+        if ($this->mysqli->query($query)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-    public function getTimeLimit($hash){
-        $hash=$this->escapeValue($hash);
-        $query="SELECT `timeLimit` FROM AdjustTransaction WHERE `tid`=(SELECT max(`tid`) FROM AdjustTransaction WHERE `hash`=${hash});";
-        if($result=$this->mysqli->query($query)){
+
+    public function getTimeLimit($hash) {
+        $hash = $this->escapeValue($hash);
+        $query = "SELECT `timeLimit` FROM AdjustTransaction WHERE `tid`=(SELECT max(`tid`) FROM AdjustTransaction WHERE `hash`=${hash});";
+        if ($result = $this->mysqli->query($query)) {
             return (int)$result->fetch_row()[0];
-        }else{
+        } else {
             return false;
         }
     }
-    public function getQuestionnaire(){
-        $ret=[];
-        $query="SELECT `text` FROM Questionnaire";
-        if($result=$this->mysqli->query($query)){
-            while($r=$result->fetch_row()){
-                array_push($ret,$r[0]);
+
+    public function getQuestionnaire() {
+        $retQ = [];
+        $retA = [];
+        $queryQ = "SELECT `text` FROM QuestionnaireQ";
+        $queryA = "SELECT `text` FROM QuestionnaireA";
+        $resultQ = $this->mysqli->query($queryQ);
+        $resultA = $this->mysqli->query($queryA);
+        if ($resultQ && $resultA) {
+            while ($r = $resultQ->fetch_row()) {
+                array_push($retQ, $r[0]);
             };
-            return $ret;
-        }else{
+            while ($r = $resultA->fetch_row()) {
+                array_push($retA, $r[0]);
+            }
+            return [$retQ, $retA];
+        } else {
             return false;
         }
     }
-    public function insertHash(string $username,int $pointer, string $hash):bool{
-        $controller=Constant::getController($pointer);
-        $times=Constant::getTimes($pointer);
-        $query=$this->assocToINSERT(['username'=>$username,'controller'=>$controller,'times'=>$times,'hash'=>$hash],'hash');
-        if($this->mysqli->query($query)){
+
+    public function insertHash(string $username, int $pointer, string $hash): bool {
+        $controller = Constant::getController($pointer);
+        $times = Constant::getTimes($pointer);
+        $query = $this->assocToINSERT(['username' => $username, 'controller' => $controller, 'times' => $times, 'hash' => $hash], 'hash');
+        if ($this->mysqli->query($query)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
