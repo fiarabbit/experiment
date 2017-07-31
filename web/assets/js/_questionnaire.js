@@ -35,7 +35,7 @@
                     window.location = 'http://experiment.va/questionnaire/finish?hash=' + clientSideData.hash + '&times=' + clientSideData.times;
                 }
             },
-            getQaLength: function () {
+            getQLength: function () {
                 return qaLength
             }
         }
@@ -76,7 +76,7 @@
             }
         };
     })(clientSideData);
-    for (let qid = 0; qid < qaController.getQaLength();qid++) {
+    for (let qid = 0; qid < qaController.getQLength(); qid++) {
         $('#answer-' + qid).click(function(ev){
             ev.stopPropagation();
             clientSideData.value=ev.offsetX / $(ev.target).width();

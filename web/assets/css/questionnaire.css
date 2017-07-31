@@ -25,5 +25,14 @@ text-align: left;
 .answer{
 height: 50px;
 width: 100%;
-border: solid;
+/*border: solid;*/
+}
+.choice{
+    height:45px;
+    width:45px;
+    border:solid;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
