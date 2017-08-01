@@ -166,7 +166,7 @@
                     }
 
                     function constraint(var1, var2) {
-                        return ((var1 * var2) % 10 !== 0) && (var1 % 10 !== 1) && (var2 % 10 !== 1) && ((var1 * var2) > 100) && !((var1 === previous_var1) && (var2 === previous_var2));
+                        return (var1 % 11 !== 0) && (var1 % 5 !== 0) && ((var1 * var2) % 10 !== 0) && (var1 % 10 !== 1) && (var2 % 10 !== 1) && ((var1 * var2) > 100) && !((var1 === previous_var1) && (var2 === previous_var2));
                     }
 
                     let question = {
