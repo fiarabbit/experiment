@@ -32,7 +32,7 @@
         <div class="gauge" style="background-color: {$colorArr[{$itr}]}"></div>
     {/for}
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/assets/js/jquery/3.2.1/jquery.min.js"></script>
 <script src="/assets/js/experiment.js"></script>
 </body>
 </html>

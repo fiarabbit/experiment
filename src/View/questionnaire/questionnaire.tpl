@@ -18,8 +18,8 @@
         </div>
     {/foreach}
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdn.rawgit.com/RobertWHurst/KeyboardJS/master/dist/keyboard.js" type="text/javascript"></script>
+<script src="/assets/js/jquery/3.2.1/jquery.min.js"></script>
+<script src="/assets/js/KeyboardJS/master/keyboard.js" type="text/javascript"></script>
 <script src="/assets/js/questionnaire.js"></script>
 </body>
 </html>

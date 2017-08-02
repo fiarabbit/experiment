@@ -329,7 +329,7 @@
 //         const correctThreshold = 0; //1
 //         let stepCounter = 0;
 //         let formerStep;
-        let experimentLength=1000 * 60 * 30; //milliseconds // 1000*60*30
+        let experimentLength=1000 * 60 * 15; //milliseconds // 1000*60*30
         let endDate;
         let nextValue;
         let ended = false;
@@ -433,7 +433,7 @@
         let counter = counterInit;
 
         let $readyButton = $('#readyButton');
-
+        let $input = $('#input');
 
         let intervalHandle;
         return {
@@ -454,6 +454,7 @@
                             displayModule.show(dataObj);
                             clearInterval(intervalHandle);
                             timerModule.timer.set(displayModule, senderModule, dataObj, adjusterModule);
+                            $input.focus();
                         }
                     };
                     intervalHandle = setInterval(next, 1000);

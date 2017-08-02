@@ -426,7 +426,7 @@
         let counter = counterInit;
 
         let $readyButton = $('#readyButton');
-
+        let $input = $('#input');
 
         let intervalHandle;
         return {
@@ -446,6 +446,7 @@
                             displayModule.show(dataObj);
                             clearInterval(intervalHandle);
                             timerModule.timer.set(displayModule, senderModule, dataObj, adjusterModule);
+                            $input.focus();
                         }
                     };
                     intervalHandle = setInterval(next, 1000);
