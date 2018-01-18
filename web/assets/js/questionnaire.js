@@ -33,7 +33,7 @@
                 if (qid < qLength) {
                     return qid
                 } else {
-                    window.location = 'http://experiment.va/questionnaire/finish?hash=' + clientSideData.hash + '&times=' + clientSideData.times;
+                    window.location = '/questionnaire/finish?hash=' + clientSideData.hash + '&times=' + clientSideData.times;
                 }
             },
             getQLength: function () {
@@ -94,7 +94,7 @@
         return {
             sendData: function () {
                 $.ajax({
-                    url: "http://experiment.va/questionnaire/sendData",
+                    url: "/questionnaire/sendData",
                     type: "GET",
                     data: dataObj
                 })
