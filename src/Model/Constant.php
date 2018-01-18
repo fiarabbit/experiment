@@ -14,13 +14,13 @@ class Constant {
     const PREFIX = 'http://experiment.va';
     const PROTOCOL = [
         ['login',0],
-        ['adjust',0],
+        ['tmt',0],
         ['questionnaire',0],
         ['another',0],
-        ['experiment',0],
+        ['tmt',1],
         ['questionnaire',1],
         ['another',1],
-        ['experiment',1],
+        ['tmt',2],
         ['questionnaire',2],
         ['another',2],
         ['finish',0]

@@ -15,6 +15,7 @@ use Hashimoto\Experiment\Controller\FinishController;
 use Hashimoto\Experiment\Controller\LoginController;
 use Hashimoto\Experiment\Controller\QuestionnaireController;
 use Hashimoto\Experiment\Controller\AnotherController;
+use Hashimoto\Experiment\Controller\TmtController;
 use Hashimoto\Experiment\Model\Constant;
 use Hashimoto\Experiment\Model\Cookie;
 use Hashimoto\Experiment\Model\MySQL;
@@ -154,6 +155,23 @@ class Router {
                     switch ($action) {
                         case 'show':
                             $controllerInstance->show();
+                            break;
+                        default:
+                            print_r('invalid action');
+                    }
+                    break;
+                case 'tmt':
+                    $controllerInstance = new TmtController();
+                    $action = $action ?: 'show';
+                    switch ($action) {
+                        case 'show':
+                            $controllerInstance->show();
+                            break;
+                        case 'sendData':
+                            $controllerInstance->sendData();
+                            break;
+                        case 'finish':
+                            $controllerInstance->finish();
                             break;
                         default:
                             print_r('invalid action');

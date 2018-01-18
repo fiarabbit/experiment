@@ -204,6 +204,18 @@ class MySQL {
         }
     }
 
+    public function insertServerSideTmtData(array $srvAssoc): bool {
+        if (!isset($srvAssoc['username']) || !$this->isUserExist($srvAssoc['username'])) {
+            throw new \Exception('NoUserSQL');
+        }
+        $query = $this->assocToINSERT($srvAssoc, 'TmtTransaction');
+        if ($this->mysqli->query(($query))){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
     public function getTimeLimit($hash) {
         $hash = $this->escapeValue($hash);
         $query = "SELECT `timeLimit` FROM AdjustTransaction WHERE `tid`=(SELECT max(`tid`) FROM AdjustTransaction WHERE `hash`=${hash});";

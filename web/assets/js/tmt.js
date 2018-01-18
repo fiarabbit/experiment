@@ -294,7 +294,7 @@ model = (function () {
             }
         })(),
         questionGenerator: {
-            MAX_INDEX: 26,
+            MAX_INDEX: model.externalData["targetnumber"],
             newQuestionAndType: (function () {
                 const japanese = "あいうえおかきくけこさしす";
                 var labels_A = [];
@@ -411,7 +411,7 @@ model = (function () {
                                 model.state.setEnd(Date.now());
                                 model.state.save();
                                 var to_be_sent = model.state.dump();
-                                model.event.dispatcher.sendData(to_be_sent);
+                                model.sender.send(to_be_sent);
                                 model.drawer.line.clearAll();
                                 model.drawer.line.stopDrawing(true);
                                 console.log("saved");
@@ -436,10 +436,6 @@ model = (function () {
                             model.state.setMistakeStatus(true);
                         }
                     }
-                },
-                onSendData: function (ev) {
-                    var data = ev.detail;
-                    model.sender.send(data);
                 }
             },
             dispatcher: (function () {
@@ -470,10 +466,8 @@ model = (function () {
                     },
                     divClick: function (xy) {
                         document.dispatchEvent(new CustomEvent("divClick", {detail: xy}))
-                    },
-                    sendData: function (data) {
-                        document.dispatchEvent(new CustomEvent("sendData", {detail: data}))
                     }
+
                 }
             })()
         },
@@ -487,6 +481,7 @@ model = (function () {
             var current_question_mistake;
             var current_question_type;
             var current_mistake_status;
+            var is_last = false;
             return {
                 setQid: function (qid) {
                     current_qid = qid;
@@ -536,6 +531,12 @@ model = (function () {
                 getMistakeStatus: function () {
                     return current_mistake_status
                 },
+                getIsLast: function() {
+                    return is_last
+                },
+                setIsLast: function(){
+                    is_last = true
+                },
                 save: function () {
                     history.push({
                         question: current_question,
@@ -547,7 +548,7 @@ model = (function () {
                 },
                 dump: function () {
                     return {
-                        question: current_question,
+                        qid: current_qid,
                         start: current_question_start_timestamp,
                         end: current_question_end_timestamp,
                         mistake: current_question_mistake,
@@ -567,33 +568,36 @@ model = (function () {
                     var req = new XMLHttpRequest();
                     req.onreadystatechange = function () {
                         console.log(req.readyState);
-                        if (req.readyState == 4) {
-                            if (req.status == 200) {
+                        if (req.readyState === 4) {
+                            if (req.status === 200) {
                                 var response = req.responseText;
                                 console.log(response);
-                                if (response == "invalid hash") {
+                                if (response === "invalid hash") {
                                     location.reload();
-                                } else if (response == "success") {
+                                } else if (response === "success") {
                                     console.log("successfully sent");
+                                    if (model.state.getIsLast()){
+                                        var query = "username=" + model.externalData["username"] + "&hash=" + model.externalData["hash"];
+                                        window.href = "/tmt/finish?" + query
+                                    }
                                 }
                             }
                         }
                     };
-                    req.open('POST', url, true);
-                    req.setRequestHeader('content-type',
-                        'application/x-www-form-urlencoded;charset=UTF-8');
                     var _ = [];
-                    for (var key in data) {
+                    var key;
+                    for (key in data) {
                         _.push(key + '=' + encodeURIComponent(data[key]));
                     }
                     var encoded_string = _.join('&');
                     _ = [];
-                    for (var key in model.externalData){
+                    for (key in model.externalData){
                         _.push(key + '=' + encodeURIComponent(model.externalData[key]));
                     }
                     encoded_string = encoded_string + "&" + _.join('&');
-                    console.log(encoded_string)
-                    req.send(encoded_string);
+                    console.log(encoded_string);
+                    req.open('GET', url+ "?" + encoded_string, true);
+                    req.send(null);
                 }
             }
         })(),
@@ -612,6 +616,6 @@ document.addEventListener("reportXY", model.event.functions.onReportXY);
 document.addEventListener("hover", model.event.functions.onHover);
 document.addEventListener("divClick", model.event.functions.onDivClick);
 document.addEventListener("clickCorrect", model.event.functions.onClickCorrect);
-document.addEventListener("sendData", model.event.functions.onSendData);
 
+setTimeout(model.state.setIsLast, 1000*60*30);
 model.event.dispatcher.newQuestion(question, type);
