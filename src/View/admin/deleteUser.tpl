@@ -6,7 +6,7 @@
 </head>
 <body>
 <div>{$MESSAGE}</div>
-<form id="form" action="{$PREFIX}/admin/deleteUser" method="post">
+<form id="form" action="/admin/deleteUser" method="post">
   <label>
     Delete User Name:<input name={$USERNAME_ALIAS} size="40" id="input">
   </label>

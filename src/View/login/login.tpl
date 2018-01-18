@@ -7,7 +7,7 @@
 </head>
 <body>
 <div>{$msg}</div>
-<form id="form" action="{$PREFIX}/login/newUser" method="get">
+<form id="form" action="/login/newUser" method="get">
     <label>
         Your Name:<input name="{$USERNAME}" size="40" id="input">
     </label>

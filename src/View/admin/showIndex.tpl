@@ -10,7 +10,7 @@
 </div>
 <ul>
     {foreach from=$ACTION item=v}
-      <li><a href="{$PREFIX}/admin/{$v}">{$v}</a></li>
+      <li><a href="/admin/{$v}">{$v}</a></li>
     {/foreach}
 </ul>
 </body>

@@ -16,8 +16,8 @@ namespace Hashimoto\Experiment\Model;
  */
 class MySQL {
     const HOST = 'localhost';
-    const USERNAME = 'vagrant';
-    const PASSWD = 'treating2u';
+    const USERNAME = 'www-data';
+    const PASSWD = 'php_password';
     const DBNAME = 'experiment';
     const INSERT = 1;
     const UPDATE = 2;

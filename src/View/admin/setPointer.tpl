@@ -6,7 +6,7 @@
 </head>
 <body>
 <div>{$MESSAGE}</div>
-<form id="form" action="{$PREFIX}/admin/setPointer" method="post">
+<form id="form" action="/admin/setPointer" method="post">
     <label>
         User Name:<input name={$USERNAME_ALIAS} size=40 id="username">
     </label>
