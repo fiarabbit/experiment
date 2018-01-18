@@ -561,10 +561,10 @@ model = (function () {
                 }
             }
         })(),
-        sender: (function (data) {
+        sender: (function () {
             var url = "/tmt/sendData";
             return {
-                send: function () {
+                send: function (data) {
                     console.log(data);
                     console.log("start sending data");
                     var req = new XMLHttpRequest();
