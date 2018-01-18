@@ -69,16 +69,11 @@ class TmtController {
         $pointerCli = array_search(['tmt', $_GET['times']??(function(){throw new \Exception(('noTimes'));})()], Constant::PROTOCOL);
         if ($hashSrv!=$hashCli || $pointerSrv!=$pointerCli){
             print_r('invalid hash or pointer');
-            var_dump($hashSrv);
-            var_dump($hashCli);
-            var_dump($pointerSrv);
-            var_dump($pointerCli);
-
             print_r("srv:" . $hashSrv . " cli:" . $hashCli . "result:" . ($hashSrv==$hashCli));
             print_r("srv:" . $pointerSrv . " cli:" . $pointerCli . "result:" . ($pointerSrv==$pointerCli));
         } else {
             $mysql->insertHash($username, $pointerSrv, $hashSrv);
-            if($mysql->insertAndUpdateUser($username, ['hash'=>''], MySQL::UPDATE)){
+            if($mysql->insertAndUpdateUser($username, ['pointer' => $pointerSrv+1, 'hash'=>''], MySQL::UPDATE)){
                 Redirect::redirectByPointer($pointerSrv+1);
             };
 
