@@ -48,7 +48,7 @@ let counter = (function () {
                 $ph0.text('keep smiling');
                 if(count===0){
                     $.ajax({
-                        url: 'http://experiment.va/another/start',
+                        url: '/another/start',
                         type: 'GET',
                         data: clientSideData
                     }).done(function (response) {
@@ -62,7 +62,7 @@ let counter = (function () {
                 }
             }
             if (!(count > countThreshold)) {
-                window.location = 'http://experiment.va/another/finish?'
+                window.location = '/another/finish?'
                     + '&username=' + clientSideData.username
                     + '&hash=' + clientSideData.hash
                     + '&times='+clientSideData.times
