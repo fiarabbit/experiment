@@ -181,6 +181,21 @@ view = (function () {
 
 model = (function () {
     return {
+        timer: (function(){
+            var timer;
+            var startTime;
+            return {
+                set: function(){
+                    if (timer === undefined) {
+                        timer = setTimeout(model.state.setIsLast, externalData["duration"]);
+                        startTime = Date.now();
+                    }
+                },
+                getRemaining: function(){
+                    console.log((Date.now()-startTime)/1000/60 + "minutes")
+                }
+            }
+        })(),
         drawer: { // only model.drawer can draw something via view
             line: (function () {
                 var drawing = false;
@@ -360,6 +375,8 @@ model = (function () {
                 onNewQuestion: function (ev) {
                     var question = ev.detail.question;
                     var question_type = ev.detail.question_type;
+                    model.timer.set();
+                    model.timer.getRemaining();
                     model.state.setIndex(0);
                     model.state.setQid(model.state.getQid() + 1);
                     model.state.setQuestion(question);
@@ -617,5 +634,4 @@ document.addEventListener("hover", model.event.functions.onHover);
 document.addEventListener("divClick", model.event.functions.onDivClick);
 document.addEventListener("clickCorrect", model.event.functions.onClickCorrect);
 
-setTimeout(model.state.setIsLast, externalData["duration"]);
 model.event.dispatcher.newQuestion(question, type);
