@@ -67,10 +67,15 @@ class TmtController {
         list($hashSrv, $pointerSrv) = $mysql->fetchUserInfo($username, ['hash', 'pointer']);
         $hashCli = $_GET['hash'] ?? (function(){throw new \Exception('noHash');})();
         $pointerCli = array_search(['tmt', $_GET['times']??(function(){throw new \Exception(('noTimes'));})()], Constant::PROTOCOL);
-        if ($hashSrv!==$hashCli || $pointerSrv!==$pointerCli){
+        if ($hashSrv!=$hashCli || $pointerSrv!=$pointerCli){
             print_r('invalid hash or pointer');
-            print_r("srv:" . $hashSrv . " cli:" . $hashCli . "result:" . ($hashSrv===$hashCli));
-            print_r("srv:" . $pointerSrv . " cli:" . $pointerCli . "result:" . ($pointerSrv===$pointerCli));
+            var_dump($hashSrv);
+            var_dump($hashCli);
+            var_dump($pointerSrv);
+            var_dump($pointerCli);
+
+            print_r("srv:" . $hashSrv . " cli:" . $hashCli . "result:" . ($hashSrv==$hashCli));
+            print_r("srv:" . $pointerSrv . " cli:" . $pointerCli . "result:" . ($pointerSrv==$pointerCli));
         } else {
             $mysql->insertHash($username, $pointerSrv, $hashSrv);
             if($mysql->insertAndUpdateUser($username, ['hash'=>''], MySQL::UPDATE)){
