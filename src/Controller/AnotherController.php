@@ -68,7 +68,6 @@ class AnotherController {
 
             $srvArr = AnotherData::convertClientToServer($clientSideData);
             $srvArr['typeid'] = ($type==='finish');
-            var_dump($srvArr);exit();
             if ($mysql->insertServerSideAnotherData($srvArr)) {
                 $mysql->insertHash($username, $pointerSrv, $hashSrv);
                 if ($type === 'start') {

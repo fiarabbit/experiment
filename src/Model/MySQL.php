@@ -200,6 +200,7 @@ class MySQL {
         if ($this->mysqli->query($query)) {
             return true;
         } else {
+            print_r($this->mysqli->error);
             return false;
         }
     }
