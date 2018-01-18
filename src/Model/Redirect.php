@@ -25,8 +25,8 @@ class Redirect {
         $controller = Constant::getController($pointer);
         $action=Constant::DEFAULT_ACTION[$controller];
         $times = Constant::getTimes($pointer);
-        print_r('Location: ' . '/' . $controller . '/' . $action . '?times=' . $times);
-        exit();
+//        print_r('Location: ' . '/' . $controller . '/' . $action . '?times=' . $times);
+//        exit();
         header('Location: ' . '/' . $controller . '/' . $action . '?times=' . $times);
         exit();
     }
