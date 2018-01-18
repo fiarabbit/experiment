@@ -33,7 +33,7 @@ class TmtController {
         $hash = bin2hex(random_bytes(Constant::HASH_LENGTH));
         if ($times == 0){
             $targetnumber = 6;
-            $duration = 1000*30*1;
+            $duration = 1000*10*1;
         } else{
             $targetnumber = 26;
             $duration = 1000*60*10;
@@ -69,6 +69,8 @@ class TmtController {
         $pointerCli = array_search(['tmt', $_GET['times']??(function(){throw new \Exception(('noTimes'));})()], Constant::PROTOCOL);
         if ($hashSrv!==$hashCli || $pointerSrv!==$pointerCli){
             print_r('invalid hash or pointer');
+            print_r("srv:" . $hashSrv . " cli:" . $hashCli);
+            print_r("srv:" . $pointerSrv . " cli:" . $pointerCli);
         } else {
             $mysql->insertHash($username, $pointerSrv, $hashSrv);
             if($mysql->insertAndUpdateUser($username, ['hash'=>''], MySQL::UPDATE)){
