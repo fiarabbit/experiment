@@ -33,7 +33,7 @@ class TmtController {
         $hash = bin2hex(random_bytes(Constant::HASH_LENGTH));
         if ($times == 0){
             $targetnumber = 6;
-            $duration = 1000*60*1;
+            $duration = 1000*30*1;
         } else{
             $targetnumber = 26;
             $duration = 1000*60*10;

@@ -596,7 +596,7 @@ model = (function () {
                                 } else if (response === "success") {
                                     console.log("successfully sent");
                                     if (model.state.getIsLast()){
-                                        var query = "username=" + externalData["username"] + "&hash=" + externalData["hash"];
+                                        var query = "username=" + externalData["username"] + "&hash=" + externalData["hash"] + "&times=" + externalData["times"];
                                         window.location.href = "/tmt/finish?" + query
                                     }
                                 }
