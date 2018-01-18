@@ -342,6 +342,7 @@ model = (function () {
                                     var existing_x = question[j][0];
                                     var existing_y = question[j][1];
                                     var distance = Math.hypot(existing_x - x, existing_y - y);
+                                    console.log(`_: ${labels_B[j]}, : ${labels_B[i]}`);
                                     console.log(`_x: ${existing_x}, _y: ${existing_y}`);
                                     console.log(`x: ${x}, y: ${y}`);
                                     console.log(`distance: ${distance}, maruji_size: ${maruji_size}`);
