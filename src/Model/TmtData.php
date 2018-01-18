@@ -46,10 +46,11 @@ static public function getClientSideData():array{
             case 'qid':
             case 'targetnumber':
             case 'mistake':
-            case 'start':
-            case 'end':
                 $v = (int)$v;
                 break;
+            case 'start':
+            case 'end':
+                $v = (float)$v / 1000;
             case 'username':
             case 'hash':
             case 'type':
