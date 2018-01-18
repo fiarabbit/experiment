@@ -84,7 +84,6 @@ static public function convertClientToServer (array $cliAssoc):array {
                 break;
             case 'endTimestamp':
                 $arrTime = explode('.', $cliAssoc["end"]);
-                var_dump($arrTime);
                 $srvAssoc[$value] = date('Y-m-d H:i:s', $arrTime[0]) . '.' .$arrTime[1];
                 break;
         }
