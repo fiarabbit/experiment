@@ -19,7 +19,7 @@ Random = (function () {
         }
     }
 })();
-
+externalData = document.getElementById("div_data").dataset;
 view = (function () {
     return {
         maruji: (function () {
@@ -294,7 +294,7 @@ model = (function () {
             }
         })(),
         questionGenerator: {
-            MAX_INDEX: model.externalData["targetnumber"],
+            MAX_INDEX: externalData["targetnumber"],
             newQuestionAndType: (function () {
                 const japanese = "あいうえおかきくけこさしす";
                 var labels_A = [];
@@ -577,7 +577,7 @@ model = (function () {
                                 } else if (response === "success") {
                                     console.log("successfully sent");
                                     if (model.state.getIsLast()){
-                                        var query = "username=" + model.externalData["username"] + "&hash=" + model.externalData["hash"];
+                                        var query = "username=" + externalData["username"] + "&hash=" + externalData["hash"];
                                         window.href = "/tmt/finish?" + query
                                     }
                                 }
@@ -591,8 +591,8 @@ model = (function () {
                     }
                     var encoded_string = _.join('&');
                     _ = [];
-                    for (key in model.externalData){
-                        _.push(key + '=' + encodeURIComponent(model.externalData[key]));
+                    for (key in externalData){
+                        _.push(key + '=' + encodeURIComponent(externalData[key]));
                     }
                     encoded_string = encoded_string + "&" + _.join('&');
                     console.log(encoded_string);
@@ -600,9 +600,7 @@ model = (function () {
                     req.send(null);
                 }
             }
-        })(),
-        externalData: document.getElementById("div_data").dataset
-
+        })()
     }
 })();
 
