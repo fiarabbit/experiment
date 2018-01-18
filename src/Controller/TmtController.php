@@ -33,10 +33,12 @@ class TmtController {
         $hash = bin2hex(random_bytes(Constant::HASH_LENGTH));
         if ($times == 0){
             $targetnumber = 6;
+            $duration = 1000*60*1;
         } else{
             $targetnumber = 26;
+            $duration = 1000*60*10;
         }
-        $this->smarty->assign(["username"=>$username, "times"=>$times, "hash"=>$hash, "targetnumber"=>$targetnumber]);
+        $this->smarty->assign(["username"=>$username, "times"=>$times, "hash"=>$hash, "targetnumber"=>$targetnumber, "duration"=>$duration]);
         if ($mysql->insertAndUpdateUser($username, ['hash' => $hash], MySQL::UPDATE)){
             $this->smarty->display('tmt/tmt.tpl');
         } else {

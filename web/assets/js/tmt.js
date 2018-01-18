@@ -617,5 +617,5 @@ document.addEventListener("hover", model.event.functions.onHover);
 document.addEventListener("divClick", model.event.functions.onDivClick);
 document.addEventListener("clickCorrect", model.event.functions.onClickCorrect);
 
-setTimeout(model.state.setIsLast, 1000*60*30);
+setTimeout(model.state.setIsLast, externalData["duration"]);
 model.event.dispatcher.newQuestion(question, type);
