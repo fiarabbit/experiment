@@ -336,7 +336,7 @@ model = (function () {
                             var x = xy[0];
                             var y = xy[1];
                             var flag = true;
-                            for (var j = 0; j < i - 1; j++) {
+                            for (var j = 0; j < i; j++) {
                                 //check yoko
                                 if (flag) {
                                     var existing_x = question[j][0];
