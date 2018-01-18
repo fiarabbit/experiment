@@ -34,7 +34,11 @@ class MySQL {
     }
 
     private function escapeValue($value) {
-        return '"' . mysqli_real_escape_string($this->mysqli, (string)$value) . '"';
+        if(is_bool($value)){
+            return (string)$value;
+        }else {
+            return '"' . mysqli_real_escape_string($this->mysqli, (string)$value) . '"';
+        }
     }
 
     private function escapeColumn($columnName) {
@@ -197,7 +201,6 @@ class MySQL {
             throw new \Exception('NoUserSQL');
         }
         $query = $this->assocToINSERT($srvAssoc, 'AnotherTransaction');
-        var_dump($query);exit();
         if ($this->mysqli->query($query)) {
             return true;
         } else {
