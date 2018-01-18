@@ -192,7 +192,7 @@ model = (function () {
                     }
                 },
                 getRemaining: function(){
-                    console.log((Date.now()-startTime)/1000/60 + "minutes")
+                    console.log((externalData["duration"]-Date.now()+startTime)/1000/60 + "minutes")
                 }
             }
         })(),
