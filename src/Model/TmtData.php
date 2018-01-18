@@ -6,7 +6,7 @@
  * Time: 2:30
  */
 
-namespace Model;
+namespace Hashimoto\Experiment\Model;
 
 
 class TmtData {

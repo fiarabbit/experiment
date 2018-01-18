@@ -14,7 +14,7 @@ use Hashimoto\Experiment\Model\MySQL;
 use Hashimoto\Experiment\Model\Redirect;
 use Hashimoto\Experiment\Model\Session;
 use Hashimoto\Experiment\Model\SmartyExtension;
-use Model\TmtData;
+use Hashimoto\Experiment\Model\TmtData;
 
 class TmtController {
     private $smarty;
