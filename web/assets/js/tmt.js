@@ -294,7 +294,7 @@ model = (function () {
             }
         })(),
         questionGenerator: {
-            MAX_INDEX: externalData["targetnumber"],
+            MAX_INDEX: parseInt(externalData["targetnumber"]),
             newQuestionAndType: (function () {
                 const japanese = "あいうえおかきくけこさしす";
                 var labels_A = [];
