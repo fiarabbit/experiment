@@ -564,6 +564,7 @@ model = (function () {
             var url = "/tmt/sendData";
             return {
                 send: function () {
+                    console.log(data);
                     console.log("start sending data");
                     var req = new XMLHttpRequest();
                     req.onreadystatechange = function () {

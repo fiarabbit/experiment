@@ -51,6 +51,7 @@ static public function getClientSideData():array{
             case 'start':
             case 'end':
                 $v = (float)$v / 1000;
+                break;
             case 'username':
             case 'hash':
             case 'type':
