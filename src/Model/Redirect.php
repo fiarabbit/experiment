@@ -11,13 +11,13 @@ namespace Hashimoto\Experiment\Model;
 
 class Redirect {
     static function redirect(string $controller, string $action) {
-        header('Location: ' . Constant::PREFIX . '/' . $controller . '/' . $action);
+        header('Location: ' . '/' . $controller . '/' . $action);
         exit();
     }
 
     static function redirectWithParameter(string $controller, string $action, array $queryData) {
         $query = http_build_query($queryData);
-        header('Location: ' . Constant::PREFIX . '/' . $controller . '/' . $action . '?' . $query);
+        header('Location: ' . '/' . $controller . '/' . $action . '?' . $query);
         exit();
     }
 
@@ -25,7 +25,7 @@ class Redirect {
         $controller = Constant::getController($pointer);
         $action=Constant::DEFAULT_ACTION[$controller];
         $times = Constant::getTimes($pointer);
-        header('Location: ' . Constant::PREFIX . '/' . $controller . '/' . $action . '?times=' . $times);
+        header('Location: ' . '/' . $controller . '/' . $action . '?times=' . $times);
         exit();
     }
 }
