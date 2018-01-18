@@ -411,6 +411,7 @@ model = (function () {
                                 model.state.setEnd(Date.now());
                                 model.state.save();
                                 var to_be_sent = model.state.dump();
+                                console.log(to_be_sent);
                                 model.sender.send(to_be_sent);
                                 model.drawer.line.clearAll();
                                 model.drawer.line.stopDrawing(true);
