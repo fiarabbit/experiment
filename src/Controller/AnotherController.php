@@ -73,8 +73,8 @@ class AnotherController {
                 if ($type === 'start') {
                     print_r('success');
                 } else if ($type === 'finish') {
-//                    $mysql->insertAndUpdateUser($username,['hash'=>'','pointer'=>$pointerSrv+1],MySQL::UPDATE);
-//                    Redirect::redirectByPointer($pointerSrv + 1);
+                    $mysql->insertAndUpdateUser($username,['hash'=>'','pointer'=>$pointerSrv+1],MySQL::UPDATE);
+                    Redirect::redirectByPointer($pointerSrv + 1);
                 }
             } else {
                 print_r('sql error');
