@@ -20,7 +20,7 @@ const SERVER_PROPERTY=[
     'username',
     'times',
     'hash',
-    'type'
+    'typeid'
 ];
 static public function getClientSideData():array{
     $cliAssoc=[];
@@ -51,6 +51,8 @@ static public function convertClientToServer (array $cliAssoc):array{
             case 'hash':
                 $srvAssoc[$value]=$cliAssoc[$value];
                 break;
+            case 'typeid':
+                $srvAssoc[$value] = ($cliAssoc['type']==="start") ?: (!$cliAssoc['type']=='finish') ?: (function(){throw new \Exception('invalid type received')})();
         }
     }
     return $srvAssoc;
