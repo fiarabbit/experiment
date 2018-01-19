@@ -61,6 +61,8 @@ static public function convertClientToServer (array $cliAssoc):array{
                 }
         }
     }
+    var_dump($cliAssoc);
+    var_dump($srvAssoc);
     return $srvAssoc;
 }
 }
