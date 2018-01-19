@@ -35,6 +35,8 @@ class MySQL {
 
     private function escapeValue($value) {
         if(is_bool($value)){
+            var_dump((string)$value);
+            exit();
             return (string)$value;
         }else {
             return '"' . mysqli_real_escape_string($this->mysqli, (string)$value) . '"';
