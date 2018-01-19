@@ -201,7 +201,7 @@ class MySQL {
             throw new \Exception('NoUserSQL');
         }
         $query = $this->assocToINSERT($srvAssoc, 'AnotherTransaction');
-        var_dump($query);exit();
+        var_dump($query);
         if ($this->mysqli->query($query)) {
             return true;
         } else {
