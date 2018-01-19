@@ -52,7 +52,7 @@ static public function convertClientToServer (array $cliAssoc):array{
                 $srvAssoc[$value]=$cliAssoc[$value];
                 break;
             case 'typeid':
-                $srvAssoc[$value] = ($cliAssoc['type']==="start") ?: (!$cliAssoc['type']=='finish') ?: (function(){throw new \Exception('invalid type received')})();
+                $srvAssoc[$value] = ($cliAssoc['type']==="start") ?: (!$cliAssoc['type']=='finish') ?: (function(){throw new \Exception('invalid type received');})();
         }
     }
     return $srvAssoc;
