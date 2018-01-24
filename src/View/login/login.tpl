@@ -15,6 +15,10 @@
 <div>
     javascript: <span id="jscheck">disabled</span>
 </div>
+<div>
+    cookie: <span id="cookiecheck">disabled</span>
+</div>
 <script type="text/javascript">document.getElementById("jscheck").textContent="enabled"</script>
+<script type="text/javascript">if(document.cookie.search(/cookie=true/)){document.getElementById("cookiecheck").textContent="enabled"}</script>
 </body>
 </html>
