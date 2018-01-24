@@ -9,7 +9,7 @@
 <div>{$msg}</div>
 <form id="form" action="/login/newUser" method="get">
     <label>
-        Your Name:<input name="{$USERNAME}" size="40" id="input">
+        Your Name:<input name="{$USERNAME}" size="40" id="input" disabled="disabled">
     </label>
 </form>
 <div>
