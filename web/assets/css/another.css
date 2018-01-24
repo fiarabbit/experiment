@@ -48,6 +48,7 @@ body{
 #videoHolder{
     height: 180px;
     width: 320px;
+    top: 30px;
     margin: auto;
     position: relative;
     text-align: center;
