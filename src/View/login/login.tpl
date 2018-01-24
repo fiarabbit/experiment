@@ -18,6 +18,6 @@
 <div>
     cookie: <span id="cookiecheck">disabled</span>
 </div>
-<script type="text/javascript" src="assets/login.js"></script>
+<script type="text/javascript" src="assets/js/login.js"></script>
 </body>
 </html>
