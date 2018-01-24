@@ -26,6 +26,7 @@ navigator.mediaDevices.getUserMedia(constraints)
         var video = document.getElementById('video');
         video.src = window.URL.createObjectURL(stream);
         video.onloadedmetadata = function(e) {
+            document.getElementById('videocheck').textContent = 'enabled';
             video.play();
         };
     })
