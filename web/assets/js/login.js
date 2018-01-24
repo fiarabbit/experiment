@@ -35,7 +35,7 @@ navigator.mediaDevices.getUserMedia(constraints)
 
 var repeat = setInterval(
     function () {
-        if (document.getElementById("jscheck") === "enabled" && document.getElementById("cookiecheck") === "enabled" && document.getElementById("videocheck") === "enabled") {
+        if (document.getElementById("jscheck").textContent === "enabled" && document.getElementById("cookiecheck").textContent === "enabled" && document.getElementById("videocheck").textContent === "enabled") {
             document.getElementById("input").disabled = "";
             clearInterval(repeat);
         }
