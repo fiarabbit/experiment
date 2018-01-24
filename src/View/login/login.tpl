@@ -15,5 +15,6 @@
 <div>
     javascript: <span id="jscheck">disabled</span>
 </div>
+<script type="text/javascript">document.getElementById("jscheck").textContent="enabled"</script>
 </body>
 </html>
