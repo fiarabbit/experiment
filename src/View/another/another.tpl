@@ -16,8 +16,9 @@
     <div id="placeHolder0" style="display: none">5</div>
     <div id="placeHolder1" style="display: none;">
     </div>
+    <video id="video" autoplay style="width: 320px; height: 180px; border: 1px solid black;-moz-transform: scale(-1, 1); -webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); transform: scale(-1, 1);"></video>
+
 </div>
-<video id="video" autoplay style="width: 320px; height: 180px; border: 1px solid black;-moz-transform: scale(-1, 1); -webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); transform: scale(-1, 1);"></video>
 
 <script src="/assets/js/jquery/3.2.1/jquery.min.js"></script>
 <script src="/assets/js/another.js"></script>
