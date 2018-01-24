@@ -11,6 +11,9 @@
     <label>
         Your Name:<input name="{$USERNAME}" size="40" id="input">
     </label>
+<div id="jscheck">
+    javascript: <span>disabled</span>
+</div>
 </form>
 </body>
 </html>
