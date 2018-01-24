@@ -37,6 +37,9 @@ class LoginController {
     //public function
     public function show($msg = null) { // display
         $msg = $msg ?: (self::MESSAGE[filter_input(INPUT_GET, "MESSAGE")]??'');
+        Cookie::setJSONCookie([
+            'cookie' => true
+        ]);
         $this->smarty->assign(['msg' => $msg, 'USERNAME' => self::USERNAME]);
         $this->smarty->display('login/login.tpl');
     }
