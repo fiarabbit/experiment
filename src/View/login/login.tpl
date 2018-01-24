@@ -18,7 +18,6 @@
 <div>
     cookie: <span id="cookiecheck">disabled</span>
 </div>
-<script type="text/javascript">document.getElementById("jscheck").textContent="enabled"</script>
-<script type="text/javascript">if(document.cookie.search(/cookie=true/)){document.getElementById("cookiecheck").textContent="enabled"}</script>
+<script type="text/javascript" src="assets/login.js"></script>
 </body>
 </html>
