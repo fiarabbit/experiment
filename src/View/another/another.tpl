@@ -17,6 +17,9 @@
     <div id="placeHolder1" style="display: none;">
     </div>
 </div>
+<div>
+    video: <span id="videocheck">disabled</span>
+</div>
 <script src="/assets/js/jquery/3.2.1/jquery.min.js"></script>
 <script src="/assets/js/another.js"></script>
 </body>
