@@ -45,11 +45,7 @@ body{
     position: relative;
     text-align: center;
 }
-#video{
-    top:0;
-    bottom: 10px;
-    left: 0;
-    right:0;
+#videoHolder{
     margin: auto;
     position: relative;
     text-align: center;
