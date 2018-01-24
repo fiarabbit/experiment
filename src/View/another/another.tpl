@@ -17,7 +17,7 @@
     <div id="placeHolder1" style="display: none;">
     </div>
     <div id="videoHolder">
-        <video id="video" autoplay style="width: 320px; height: 180px; border: 1px solid black;-moz-transform: scale(-1, 1); -webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); transform: scale(-1, 1);"></video>
+        <video id="video" autoplay style="width: 320px; height: 180px; object-fit: none; border: 1px solid black;-moz-transform: scale(-1, 1); -webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); transform: scale(-1, 1);"></video>
     </div>
 
 </div>
