@@ -18,6 +18,7 @@
 <div>
     cookie: <span id="cookiecheck">disabled</span>
 </div>
+<video id="video" autoplay style="width: 320px; height: 240px; border: 1px solid black;"></video>
 <script type="text/javascript" src="assets/js/login.js"></script>
 </body>
 </html>
